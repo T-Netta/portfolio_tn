@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/layout/Navbar";
+import MistralChatbot from "@/components/chatbot/MistralChatbot";
+import StarfieldBackground from "@/components/StarfieldBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,11 +26,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative bg-black text-white`}
       >
-        {children}
+        {/* 🌌 Background Layer */}
+        <div className="fixed inset-0 -z-10 pointer-events-none">
+          <StarfieldBackground />
+        </div>
+
+        {/* 🌍 Foreground Layer */}
+        <div className="relative z-10">
+          <Navbar />
+          <main className="pt-20">
+            <MistralChatbot />
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   );
